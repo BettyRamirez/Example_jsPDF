@@ -1,8 +1,13 @@
-function ZonaTres( doc = '', dataTicket = [] ) {
-    doc.setDrawColor(0, 0, 255);
-    doc.line(5.05, 0, 5.05, 2.90);
-    doc.line(6.55, 0, 6.55, 2.90);
-    doc.text(5.3, 2.90, 'Zona tres', null, 90);
+import logo from '../Images/zonaTicket.png';
+
+function ZonaTres(doc = {}, dataTicket = [], textSize = 8, lineWidth = 0.02, fontFamily = 'times'  ) {
+    // Posiciones de 5.05 a 6.55
+
+    /**
+     * agregar imagen logos
+     */
+    doc.addImage(logo, 'JPEG', 5.18, 1, 1.25, 0.90 );
+
 }
 
 export default ZonaTres;

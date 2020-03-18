@@ -1,6 +1,16 @@
 import 'jspdf-autotable';
+import qrImage from "../Images/qrp3.png";
 
-function ZonaUno( doc = '', dataTicket = [] ) {
+/**
+ * @param doc
+ * @param dataTicket
+ * @param textSize
+ * @param lineWidth
+ * @param fontFamily
+ * @constructor
+ */
+function ZonaUno( doc = {}, dataTicket = [], textSize = 8, lineWidth = 0.02, fontFamily = 'times' ) {
+    // Posiciones de 0 a 1.50
 
     /**
      * las constantes se llenaran con datos de dataTicket
@@ -23,12 +33,8 @@ function ZonaUno( doc = '', dataTicket = [] ) {
     const cargo = '$999,999.00';
     const total = '$999,999.00';
 
-    //todo: al terminar eliminar esta linea
-    doc.line(1.50, 0, 1.50, 2.90);
-
     /**Texto horizontal ciudad, fecha, hora*/
     doc.text(0.11, 2.82, `Ciudad: ${ciudad}, Fecha: ${fecha}, Hora: ${hora}`, null, 90);
-
 
     /**
      * se crea tabla con seccion, zona etc, para que al crecer el texto se expanda hacia abajo
@@ -72,18 +78,20 @@ function ZonaUno( doc = '', dataTicket = [] ) {
         })
     }
 
-    doc.autoTable(columnsUbicacion, rowsUbicacion, {
+    doc.autoTable( columnsUbicacion, rowsUbicacion, {
         margin: {top: -0.13, left: 0.14},
         willDrawCell: ( data ) => {
             if (data.section === 'head') {
                 return false
             }
             doc.setTextColor(0,0,0);
-            doc.setFont("times");
+            doc.setFont(fontFamily);
         },
         styles: {
-            overflow: 'linebreak', fontSize: 8.5, cellPadding: 0, overflowColumns: 'linebreak'
-            ,fontFamily: 'times'
+            overflow: 'linebreak',
+            fontSize: textSize,
+            cellPadding: 0,
+            overflowColumns: 'linebreak'
         },
         tableWidth: 1.35
     });
@@ -91,6 +99,7 @@ function ZonaUno( doc = '', dataTicket = [] ) {
     /**
      * se inserta el QR
      **/
+    doc.addImage(qrImage, 'JPEG', 0.14, 1.48, 1, 1);
 
     /**
      * el texto de el folio
